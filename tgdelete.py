@@ -60,6 +60,12 @@ async def delete_chats(exclude = list()):
 
 		await delete_chat(chat.id, timer = 2)
 
+async def timer_delete(event):
+	print(f"New message {event.message.id} in chat {event.message.peer_id}")
+	print("Waiting 120 second(s) for secret termination...")
+	await asyncio.sleep(120)
+	await event.message.delete()
+
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--delete-chat-id", type = int)
@@ -67,9 +73,15 @@ if __name__ == "__main__":
 	parser.add_argument("--global-delete-exclude", type = int, nargs = "*", default = [])
 	parser.add_argument("--dump-chats", action = "store_true")
 	parser.add_argument("--count-messages", action = "store_true")
+	parser.add_argument("--timer-delete", action = "store_true")
 	args = parser.parse_args()
 
 	with client:
+		if args.timer_delete:
+			client.add_event_handler(timer_delete, events.NewMessage(from_users = "me"))
+			client.run_until_disconnected()
+			exit(0)
+
 		if args.dump_chats:
 			client.loop.run_until_complete(dump_chats())
 			exit(0)
