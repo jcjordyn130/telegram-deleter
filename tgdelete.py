@@ -62,8 +62,8 @@ async def delete_chats(exclude = list()):
 
 async def timer_delete(event):
 	print(f"New message {event.message.id} in chat {event.message.peer_id}")
-	print("Waiting 120 second(s) for secret termination...")
-	await asyncio.sleep(120)
+	print("Waiting 600 second(s) for secret termination...")
+	await asyncio.sleep(600)
 	await event.message.delete()
 
 if __name__ == "__main__":

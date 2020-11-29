@@ -60,9 +60,9 @@ after the other separated by spaces like this,
 ```
 $ ./tgdelete.py --timer-delete
 New message 98765 in chat PeerChannel(channel_id=123456)
-Waiting 120 second(s) for secret termination...
+Waiting 600 second(s) for secret termination...
 ```
 
 Timer deletion is pretty self explanatory.
 
-After every message sent there is a 120 second timer placed on the message, after this timer expires the message is deleted.
+After every message sent there is a 600 second timer placed on the message, after this timer expires the message is deleted.
