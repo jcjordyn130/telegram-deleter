@@ -1,6 +1,8 @@
 #!/bin/env python3
 from telethon.sync import TelegramClient, events
 from telethon import functions, types
+from telethon.tl.types import PeerUser, PeerChannel, PeerChat
+
 import argparse
 import asyncio
 
@@ -61,7 +63,18 @@ async def delete_chats(exclude = list()):
 		await delete_chat(chat.id, timer = 2)
 
 async def timer_delete(event):
-	print(f"New message {event.message.id} in chat {event.message.peer_id}")
+	if isinstance(event.message.peer_id, PeerUser):
+		chatid = event.message.peer_id.user_id
+	elif isinstance(event.message.peer_id, PeerChat):
+		chatid = event.message.peer_id.chat_id
+	elif isinstance(event.message.peer_id, PeerChannel):
+		chatid = event.message.peer_id.channel_id
+
+	if chatid in args.global_delete_exclude:
+		print(f"Excluding message {event.message.id} from timer delete...")
+		return
+
+	print(f"New message {event.message.id} in chat {chatid}")
 	print("Waiting 600 second(s) for secret termination...")
 	await asyncio.sleep(600)
 	await event.message.delete()
