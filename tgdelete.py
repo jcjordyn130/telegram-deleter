@@ -47,7 +47,7 @@ async def count_messages():
 
 	print(counts)
 
-async def delete_chats(exclude = None):
+async def delete_chats(exclude = list()):
 	print("!!!! DELETING MESSAGES FROM ALL PUBLIC CHAT ROOMS !!!!")
 	async for chat in client.iter_dialogs():
 		if not chat.is_group:
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--delete-chat-id", type = int)
 	parser.add_argument("--delete-public-chats", action = "store_true")
-	parser.add_argument("--global-delete-exclude", type = int, nargs = "*")
+	parser.add_argument("--global-delete-exclude", type = int, nargs = "*", default = [])
 	parser.add_argument("--dump-chats", action = "store_true")
 	parser.add_argument("--count-messages", action = "store_true")
 	args = parser.parse_args()
