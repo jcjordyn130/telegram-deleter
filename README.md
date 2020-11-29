@@ -55,3 +55,14 @@ mass deletion.
 You can specify more than more ID to exclude by putting them one
 after the other separated by spaces like this, 
 `--global-delete-exclude -456873081 -457586326`.
+
+### Timer Deletion
+```
+$ ./tgdelete.py --timer-delete
+New message 98765 in chat PeerChannel(channel_id=123456)
+Waiting 120 second(s) for secret termination...
+```
+
+Timer deletion is pretty self explanatory.
+
+After every message sent there is a 120 second timer placed on the message, after this timer expires the message is deleted.
